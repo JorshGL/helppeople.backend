@@ -20,6 +20,8 @@
     <ItemGroup>
       <ProjectReference Include="..\..\helppeople.BolsaEmpleo.Application\helppeople.BolsaEmpleo.Application\helppeople.BolsaEmpleo.Application.csproj" />
       <ProjectReference Include="..\..\helppeople.BolsaEmpleo.Infraestructure\helppeople.BolsaEmpleo.Infraestructure\helppeople.BolsaEmpleo.Infraestructure.csproj" />
+      <ProjectReference Include="..\helppeople.BolsaEmpleo.Application\helppeople.BolsaEmpleo.Application.csproj" />
+      <ProjectReference Include="..\helppeople.BolsaEmpleo.Infraestructure\helppeople.BolsaEmpleo.Infraestructure.csproj" />
     </ItemGroup>
 
 </Project>
