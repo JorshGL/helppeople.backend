@@ -45,7 +45,7 @@ namespace helppeople.BolsaEmpleo.Infraestructure.Data.Migrations
 
                     b.Property<string>("IdNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -68,6 +68,9 @@ namespace helppeople.BolsaEmpleo.Infraestructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdDocumentTypeId");
+
+                    b.HasIndex("IdNumber")
+                        .IsUnique();
 
                     b.ToTable("Citizens");
                 });

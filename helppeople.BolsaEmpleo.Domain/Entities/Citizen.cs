@@ -5,7 +5,7 @@ namespace helppeople.BolsaEmpleo.Domain.Entities;
 public class Citizen : BaseEntity
 {
     public virtual IdDocumentType IdDocumentType { get; set; }
-    
+
     public string IdNumber { get; set; }
     
     public string Name { get; set; }

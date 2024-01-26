@@ -33,9 +33,25 @@ public class CitizensService : ICitizensService
         return await _citizensRepository.GetAll(c => c.IdDocumentType);
     }
 
+    public async Task<Citizen> GetById(int id)
+    {
+        var citizen = await _citizensRepository.FindById(id, c => c.IdDocumentType);
+        if (citizen == null)
+        {
+            throw new CitizenNotFound();
+        }
+
+        return citizen;
+    }
+
     public async Task<Citizen> RegisterCitizen(CreateCitizenDto createCitizenDto)
     {
         var citizen = _mapper.Map<Citizen>(createCitizenDto);
+        var idNumberAlreadyExists = await _citizensRepository.FindOne(c => c.IdNumber.Equals(citizen.IdNumber));
+        if (idNumberAlreadyExists != null)
+        {
+            throw new CitizenWithSpecifiedIdNumberAlreadyExists();
+        }
         var documentType = await _idDocumentTypesRepository.FindById(createCitizenDto.DocumentTypeId);
         if (documentType == null)
         {
@@ -54,7 +70,7 @@ public class CitizensService : ICitizensService
             throw new CitizenNotFound();
         }
 
-        currentCitizen = _mapper.Map<Citizen>(updateCitizenDto);
+        currentCitizen = _mapper.Map(updateCitizenDto, currentCitizen);
         var documentType = await _idDocumentTypesRepository.FindById(updateCitizenDto.DocumentTypeId);
         if (documentType == null)
         {
@@ -63,5 +79,10 @@ public class CitizensService : ICitizensService
 
         currentCitizen.IdDocumentType = documentType;
         return await _citizensRepository.Update(currentCitizen);
+    }
+
+    public async Task DeleteCitizen(int id)
+    {
+        await _citizensRepository.DeleteById(id);
     }
 }

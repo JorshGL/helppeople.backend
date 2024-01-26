@@ -15,6 +15,8 @@ builder.Services.AddCors(opt =>
             policyBuilder.WithOrigins(builder.Environment.IsDevelopment()
                 ? "*"
                 : builder.Configuration.GetValue<string>("AllowedOrigins", "*"));
+            policyBuilder.AllowAnyMethod();
+            policyBuilder.AllowAnyHeader();
         })
 );
 
@@ -25,7 +27,6 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddDbContext<BolsaEmpleoDBContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("BolsaEmpleoBD"));
-    opt.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 
 builder.Services.AddScoped<ICitizensRepository, CitizensRepository>();

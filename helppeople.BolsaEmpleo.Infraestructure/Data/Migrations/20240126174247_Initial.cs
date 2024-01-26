@@ -33,7 +33,7 @@ namespace helppeople.BolsaEmpleo.Infraestructure.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdDocumentTypeId = table.Column<int>(type: "int", nullable: false),
-                    IdNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BirthDate = table.Column<DateOnly>(type: "date", nullable: false),
@@ -83,6 +83,12 @@ namespace helppeople.BolsaEmpleo.Infraestructure.Data.Migrations
                 name: "IX_Citizens_IdDocumentTypeId",
                 table: "Citizens",
                 column: "IdDocumentTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Citizens_IdNumber",
+                table: "Citizens",
+                column: "IdNumber",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vacancies_CitizenId",

@@ -9,10 +9,10 @@ public class MapperProfile : Profile
     public MapperProfile()
     {
         CreateMap<CreateCitizenDto, Citizen>()
-            .ForMember(c => c.IdDocumentType,
-                opt => opt.AllowNull());
+            .ForSourceMember(dto => dto.DocumentTypeId, 
+                opt => opt.DoNotValidate());
         CreateMap<UpdateCitizenDto, Citizen>()
-            .ForMember(c => c.IdDocumentType, 
-                opt => opt.AllowNull());
+            .ForMember(c => c.IdNumber,
+                opt => opt.Ignore());
     }
 }

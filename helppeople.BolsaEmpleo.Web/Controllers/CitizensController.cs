@@ -37,6 +37,20 @@ public class CitizensController : ControllerBase
         return Ok(citizens);
     }
 
+    [HttpGet("{citizenId:int}")]
+    public async Task<IActionResult> GetById(int citizenId)
+    {
+        try
+        {
+            var citizen = await _citizensService.GetById(citizenId);
+            return Ok(citizen);
+        }
+        catch (CitizenNotFound)
+        {
+            return NotFound();
+        }
+    }
+
     [HttpPost]
     public async Task<IActionResult> RegisterCitizen(CreateCitizenDto createCitizenDto)
     {
@@ -48,6 +62,10 @@ public class CitizensController : ControllerBase
         catch (NoIdDocumentTypesFound)
         {
             return BadRequest("Invalid documentTypeId");
+        }
+        catch (CitizenWithSpecifiedIdNumberAlreadyExists)
+        {
+            return BadRequest("A citizen with that id number is already registered");
         }
     }
 
@@ -65,5 +83,17 @@ public class CitizensController : ControllerBase
         }
     }
 
-    // [HttpDelete]
+    [HttpDelete("{citizenId:int}")]
+    public async Task<IActionResult> DeleteCitizen(int citizenId)
+    {
+        try
+        {
+            await _citizensService.DeleteCitizen(citizenId);
+            return Ok();
+        }
+        catch
+        {
+            return Problem();
+        }
+    }
 }

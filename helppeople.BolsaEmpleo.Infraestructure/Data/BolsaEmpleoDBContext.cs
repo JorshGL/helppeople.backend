@@ -12,4 +12,11 @@ public class BolsaEmpleoDBContext : DbContext
     public BolsaEmpleoDBContext(DbContextOptions<BolsaEmpleoDBContext> options) : base(options)
     {
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Citizen>()
+            .HasIndex(c => c.IdNumber)
+            .IsUnique();
+    }
 }

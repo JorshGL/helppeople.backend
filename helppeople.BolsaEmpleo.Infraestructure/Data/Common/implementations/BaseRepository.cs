@@ -27,15 +27,18 @@ public abstract class BaseRepository<TEntity, TDbContext> : IRepository<TEntity>
         await _dbContext.SaveChangesAsync();
     }
 
-    public virtual async Task<TEntity?> FindById(int id)
+    public virtual async Task<TEntity?> FindById(int id, params Expression<Func<TEntity, object>>[]? includes)
     {
-        return await _dbContext.FindAsync<TEntity>(id);
+        if (includes.Length == 0) return await _dbContext.FindAsync<TEntity>(id);
+        IQueryable<TEntity> collection = _dbContext.Set<TEntity>();
+        collection = Include(collection, includes);
+        return await collection.FirstOrDefaultAsync(e => e.Id.Equals(id));
     }
 
     public virtual async Task<TEntity> FindOne(Expression<Func<TEntity, bool>> predicate)
     {
         IQueryable<TEntity> collection = _dbContext.Set<TEntity>();
-        return await collection.Where(predicate).SingleAsync();
+        return await collection.Where(predicate).SingleOrDefaultAsync();
     }
 
     public virtual async Task<IList<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
@@ -61,11 +64,17 @@ public abstract class BaseRepository<TEntity, TDbContext> : IRepository<TEntity>
         });
     }
 
+    public virtual async Task DeleteById(int id)
+    {
+        var entity = await _dbContext.FindAsync<TEntity>(id);
+        await Delete(entity);
+    }
+
     public virtual async Task Delete(TEntity entity)
     {
         await Task.Run(async () =>
         {
-            var a = _dbContext.Remove(entity);
+            _dbContext.Remove(entity);
             await _dbContext.SaveChangesAsync();
         });
     }

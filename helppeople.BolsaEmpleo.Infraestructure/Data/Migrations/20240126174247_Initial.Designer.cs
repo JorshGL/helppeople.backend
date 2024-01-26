@@ -12,7 +12,7 @@ using helppeople.BolsaEmpleo.Infraestructure.Data;
 namespace helppeople.BolsaEmpleo.Infraestructure.Data.Migrations
 {
     [DbContext(typeof(BolsaEmpleoDBContext))]
-    [Migration("20240126063111_Initial")]
+    [Migration("20240126174247_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -48,7 +48,7 @@ namespace helppeople.BolsaEmpleo.Infraestructure.Data.Migrations
 
                     b.Property<string>("IdNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -71,6 +71,9 @@ namespace helppeople.BolsaEmpleo.Infraestructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdDocumentTypeId");
+
+                    b.HasIndex("IdNumber")
+                        .IsUnique();
 
                     b.ToTable("Citizens");
                 });

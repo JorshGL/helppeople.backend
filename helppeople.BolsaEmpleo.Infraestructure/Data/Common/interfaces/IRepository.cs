@@ -9,7 +9,7 @@ public interface IRepository<TEntity> where TEntity : BaseEntity
 
     Task Save(ICollection<TEntity> entities);
 
-    Task<TEntity?> FindById(int id);
+    Task<TEntity?> FindById(int id, params Expression<Func<TEntity, object>>[]? includes);
 
     Task<TEntity?> FindOne(Expression<Func<TEntity, bool>> predicate);
     
@@ -18,6 +18,8 @@ public interface IRepository<TEntity> where TEntity : BaseEntity
     Task<IList<TEntity>> GetAll(params Expression<Func<TEntity, object>>[]? includes);
 
     Task<TEntity> Update(TEntity entity);
+
+    Task DeleteById(int id);
 
     Task Delete(TEntity entity);
 }

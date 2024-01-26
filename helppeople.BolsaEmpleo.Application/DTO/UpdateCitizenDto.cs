@@ -3,7 +3,6 @@
 public record UpdateCitizenDto(
     int Id,
     int DocumentTypeId,
-    string IdNumber,
     string Name,
     string LastName,
     DateOnly BirthDate,

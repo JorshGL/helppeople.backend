@@ -16,7 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\helppeople.BolsaEmpleo.Domain\helppeople.BolsaEmpleo.Domain\helppeople.BolsaEmpleo.Domain.csproj" />
       <ProjectReference Include="..\helppeople.BolsaEmpleo.Domain\helppeople.BolsaEmpleo.Domain.csproj" />
     </ItemGroup>
 
